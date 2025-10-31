@@ -1,4 +1,5 @@
 Sprint 1:
+
     index.html:
         In index.html there is an input box for new tasks, an add button, 
         and a list that fills dynamically as you add new items.
