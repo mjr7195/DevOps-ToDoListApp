@@ -36,10 +36,12 @@ Sprint 3:
 Sprint 4:
 
     script.js:
-        Added checkbox feature for completed tasks
+        Added checkbox feature for completed tasks.
 
     style.css:
         Added styling for checkbox and text after checkbox is checked.
 
-Additional Info:
-    More features will be included in a sprints 5-6.
+Sprint 5:
+
+    Dockerfile:
+        Required to run the project on any machine.
