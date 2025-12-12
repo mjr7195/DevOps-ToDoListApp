@@ -1,58 +1,250 @@
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background-color: #f2f2f2;
+/* =========================
+   Global
+========================= */
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
   margin: 0;
-  padding: 0;
+  font-family: "Inter", Arial, sans-serif;
 }
 
-header {
-  background-color: #0078d4;
-  color: white;
-  padding: 15px 0;
+/* White overall background */
+body {
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  padding: 16px;
 }
 
-.login-container {
-  margin-top: 100px;
+/* =========================
+   3 scale sizes
+========================= */
+:root {
+  --app-w: 360px;
+  --app-h: 780px;
+  --bubble-radius: 48px;
+  --bubble-pad: 26px;
+}
+
+@media (min-width: 600px) {
+  :root {
+    --app-w: 420px;
+    --app-h: 900px;
+    --bubble-radius: 56px;
+    --bubble-pad: 30px;
+  }
+}
+
+@media (min-width: 1000px) {
+  :root {
+    --app-w: 520px;
+    --app-h: 1060px;
+    --bubble-radius: 64px;
+    --bubble-pad: 34px;
+  }
+}
+
+/* =========================
+   App container (SVG background)
+========================= */
+.app {
+  width: min(var(--app-w), 95vw);
+  height: min(var(--app-h), 95vh);
+
+  background: url("assets/background.svg") no-repeat top center;
+  background-size: cover;
+
+  border-radius: 28px;
+  overflow: hidden;
+
+  display: flex;
+  align-items: flex-end; /* bubble sits toward bottom */
+}
+
+/* =========================
+   Big white bubble
+========================= */
+.bubble {
+  background: #ffffff;
+  width: 100%;
+  height: 78%;
+  border-radius: var(--bubble-radius) var(--bubble-radius) 0 0;
+  padding: var(--bubble-pad);
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.15);
+}
+
+/* For login/signup you usually want a little more room */
+.bubble-auth { height: 72%; }
+
+/* =========================
+   Bubble header
+========================= */
+.bubble-header {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: rgba(31, 42, 68, 0.5);
+  margin-bottom: 6px;
+}
+
+.bubble-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2a44;
+}
+
+.success-msg {
+  margin: 10px 0 0 0;
+  font-weight: 600;
+  color: #1b8f57;
+  min-height: 18px;
+}
+
+/* =========================
+   Controls (input + add button)
+========================= */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 input {
-  padding: 10px;
-  margin: 5px;
+  width: 100%;
+  padding: 13px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.12);
+  font-size: 14px;
+  outline: none;
 }
 
 button {
-  padding: 10px 20px;
-  background-color: #0078d4;
-  color: white;
+  width: 100%;
+  padding: 13px;
+  border-radius: 18px;
   border: none;
+  background: #2fc4b2;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
 }
 
+button:hover { opacity: 0.92; }
+
+/* =========================
+   Task list
+========================= */
 #taskList {
   list-style: none;
   padding: 0;
-  max-width: 600px;
-  margin: 20px auto;
-  text-align: left;
+  margin: 6px 0 0 0;
+  overflow-y: auto;
 }
 
+/* Task row (no checkbox, editor fills width) */
 #taskList li {
-  background: white;
-  padding: 10px;
-  margin: 8px 0;
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;  /* good for big textarea */
+  gap: 12px;
+  padding: 16px;
+  margin-bottom: 14px;
+  border-radius: 20px;
 }
 
-.task-text { flex: 1; }
-.task-edit-input { flex: 1; padding: 6px; }
-.edit-btn, .save-btn, .cancel-btn { padding: 6px 10px; background: #444; color: #fff; border: none; cursor: pointer; }
-.save-btn { background: #28a745; }
-.cancel-btn { background: #dc3545; }
-.delete-btn { padding: 6px 10px; background: #b00020; color: #fff; border: none; cursor: pointer; margin-left: 8px; }
-.delete-btn:hover { opacity: 0.9; }
+/* Pastel rotation */
+#taskList li:nth-child(3n+1) { background: #fff6d8; }
+#taskList li:nth-child(3n+2) { background: #e9f8fc; }
+#taskList li:nth-child(3n)   { background: #fdecec; }
 
-.task-checkbox { margin-right: 8px; }
-.completed .task-text { text-decoration: line-through; color: #888; }
+/* Text */
+.task-text {
+  flex: 1;
+  font-size: 14px;
+  color: #2b2b2b;
+  padding-top: 6px;
+}
+
+/* If you still have completed class in JS, keep this */
+.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+/* Big editor */
+.task-edit-input {
+  flex: 1;
+  width: 100%;
+  min-height: 96px;     /* bigger area */
+  padding: 16px 18px;
+
+  border-radius: 22px;
+  border: 1px solid rgba(0,0,0,0.15);
+
+  font-size: 15px;
+  font-family: inherit;
+
+  resize: none;
+  background: #ffffff;
+
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Action buttons inside tasks (compact, right side) */
+.edit-btn,
+.save-btn,
+.cancel-btn,
+.delete-btn {
+  border: none;
+  padding: 7px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  cursor: pointer;
+
+  width: auto;          /* do not stretch */
+  height: 36px;         /* consistent height */
+  align-self: flex-start; /* stay at top while textarea grows */
+  white-space: nowrap;
+}
+
+.edit-btn   { background: #2fc4b2; color: white; }
+.save-btn   { background: #28a745; color: white; }
+.cancel-btn { background: #a0a0a0; color: white; }
+.delete-btn { background: #e34b4b; color: white; }
+
+.edit-btn:hover,
+.save-btn:hover,
+.cancel-btn:hover,
+.delete-btn:hover { opacity: 0.92; }
+
+/* =========================
+   Small nav links
+========================= */
+.nav-links {
+  margin-top: auto;
+  text-align: center;
+  font-size: 13px;
+  padding-top: 10px;
+  color: rgba(31, 42, 68, 0.7);
+}
+
+.nav-links a {
+  color: rgba(31, 42, 68, 0.85);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.nav-links a:hover { text-decoration: underline; }
+
+.dot { margin: 0 8px; color: rgba(31, 42, 68, 0.45); }

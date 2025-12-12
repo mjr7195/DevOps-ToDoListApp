@@ -1,108 +1,117 @@
 const addBtn = document.getElementById("addTask");
 const taskInput = document.getElementById("newTask");
 const taskList = document.getElementById("taskList");
+const noteCountEl = document.getElementById("noteCount");
+
+function updateNoteCount() {
+  if (!noteCountEl || !taskList) return;
+  noteCountEl.textContent = taskList.children.length;
+}
+
+updateNoteCount();
 
 if (addBtn) {
   addBtn.addEventListener("click", () => {
-    if (taskInput.value.trim() === "") return;
+    if (!taskInput || !taskList) return;
+
+    const text = taskInput.value.trim();
+    if (text === "") return;
+
     const li = document.createElement("li");
 
-    // visible text
-    const span = document.createElement('span');
-    span.className = 'task-text';
-    span.textContent = taskInput.value;
+    /* visible text */
+    const span = document.createElement("span");
+    span.className = "task-text";
+    span.textContent = text;
 
-    // inline editor (hidden initially)
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'task-edit-input';
-    input.style.display = 'none';
+    /* BIG editor */
+    const input = document.createElement("textarea");
+    input.className = "task-edit-input";
+    input.rows = 4;
+    input.style.display = "none";
 
-    // edit controls
-    const editBtn = document.createElement('button');
-    editBtn.className = 'edit-btn';
-    editBtn.textContent = 'Edit';
+    /* buttons */
+    const editBtn = document.createElement("button");
+    editBtn.className = "edit-btn";
+    editBtn.textContent = "Edit";
 
-    const saveBtn = document.createElement('button');
-    saveBtn.className = 'save-btn';
-    saveBtn.textContent = 'Save';
-    saveBtn.style.display = 'none';
+    const saveBtn = document.createElement("button");
+    saveBtn.className = "save-btn";
+    saveBtn.textContent = "Save";
+    saveBtn.style.display = "none";
 
-    const cancelBtn = document.createElement('button');
-    cancelBtn.className = 'cancel-btn';
-    cancelBtn.textContent = 'Cancel';
-    cancelBtn.style.display = 'none';
+    const cancelBtn = document.createElement("button");
+    cancelBtn.className = "cancel-btn";
+    cancelBtn.textContent = "Cancel";
+    cancelBtn.style.display = "none";
 
-  // checkbox for completion
-  const checkbox = document.createElement('input');
-  checkbox.type = 'checkbox';
-  checkbox.className = 'task-checkbox';
-
-  li.appendChild(checkbox);
-  li.appendChild(span);
-  li.appendChild(input);
-    li.appendChild(editBtn);
-    li.appendChild(saveBtn);
-    li.appendChild(cancelBtn);
-    taskList.appendChild(li);
-
-    // Edit button toggles to edit mode
-    editBtn.addEventListener('click', () => {
-      input.value = span.textContent;
-      span.style.display = 'none';
-      input.style.display = '';
-      editBtn.style.display = 'none';
-      saveBtn.style.display = '';
-      cancelBtn.style.display = '';
-      input.focus();
-    });
-
-    // Save updated text
-    saveBtn.addEventListener('click', () => {
-      const newText = input.value.trim();
-      if (newText === '') return;
-      span.textContent = newText;
-      span.style.display = '';
-      input.style.display = 'none';
-      editBtn.style.display = '';
-      saveBtn.style.display = 'none';
-      cancelBtn.style.display = 'none';
-    });
-
-    // Cancel edit
-    cancelBtn.addEventListener('click', () => {
-      span.style.display = '';
-      input.style.display = 'none';
-      editBtn.style.display = '';
-      saveBtn.style.display = 'none';
-      cancelBtn.style.display = 'none';
-    });
-
-    // Delete task
     const deleteBtn = document.createElement("button");
     deleteBtn.className = "delete-btn";
     deleteBtn.textContent = "Delete";
 
-    // Add delete button to the list item
+    /* build row */
+    li.appendChild(span);
+    li.appendChild(input);
+    li.appendChild(editBtn);
+    li.appendChild(saveBtn);
+    li.appendChild(cancelBtn);
     li.appendChild(deleteBtn);
 
-    // Delete button function
+    taskList.appendChild(li);
+    updateNoteCount();
+
+    /* edit mode */
+    editBtn.addEventListener("click", () => {
+      input.value = span.textContent;
+      span.style.display = "none";
+      input.style.display = "block";
+
+      editBtn.style.display = "none";
+      saveBtn.style.display = "inline-block";
+      cancelBtn.style.display = "inline-block";
+
+      input.focus();
+    });
+
+    /* save */
+    saveBtn.addEventListener("click", () => {
+      const newText = input.value.trim();
+      if (newText === "") return;
+
+      span.textContent = newText;
+      span.style.display = "block";
+      input.style.display = "none";
+
+      editBtn.style.display = "inline-block";
+      saveBtn.style.display = "none";
+      cancelBtn.style.display = "none";
+    });
+
+    /* cancel */
+    cancelBtn.addEventListener("click", () => {
+      span.style.display = "block";
+      input.style.display = "none";
+
+      editBtn.style.display = "inline-block";
+      saveBtn.style.display = "none";
+      cancelBtn.style.display = "none";
+    });
+
+    /* delete */
     deleteBtn.addEventListener("click", () => {
-     li.remove();
+      li.remove();
+      updateNoteCount();
     });
 
-
-    // toggle completed state when checkbox changes
-    checkbox.addEventListener('change', () => {
-      if (checkbox.checked) li.classList.add('completed');
-      else li.classList.remove('completed');
+    /* keyboard shortcuts */
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        saveBtn.click();
+      }
+      if (e.key === "Escape") cancelBtn.click();
     });
 
-    // allow Enter to save and Escape to cancel
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') saveBtn.click();
-      if (e.key === 'Escape') cancelBtn.click();
-    });
     taskInput.value = "";
   });
 }

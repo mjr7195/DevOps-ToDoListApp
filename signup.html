@@ -1,58 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sign Up - ToDo App</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="login-container">
-    <h2>Create an account</h2>
-    <p id="msg" style="color: green; font-weight: bold;"></p>
-    <input type="text" id="fullName" placeholder="Full name">
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
-    <input type="password" id="confirmPassword" placeholder="Confirm password">
-    <button id="signupBtn">Sign Up</button>
-    <p>Already have an account? <a href="login.html">Login</a></p>
+  <div class="app">
+    <main class="bubble bubble-auth">
+      <div class="bubble-header">
+        <div class="subtitle">CREATE ACCOUNT</div>
+        <h1>Sign Up</h1>
+        <p id="msg" class="success-msg"></p>
+      </div>
+
+      <div class="controls">
+        <input type="text" id="fullName" placeholder="Full name" />
+        <input type="email" id="email" placeholder="Email" />
+        <input type="password" id="password" placeholder="Password" />
+        <input type="password" id="confirmPassword" placeholder="Confirm password" />
+        <button id="signupBtn" type="button">Sign Up</button>
+      </div>
+
+      <div class="nav-links">
+        <a href="login.html">Already have an account? Login</a>
+        <span class="dot">•</span>
+        <a href="index.html">Back to Notes</a>
+      </div>
+    </main>
   </div>
 
   <script>
-    const signupBtn = document.getElementById('signupBtn');
-    signupBtn.addEventListener('click', () => {
-      const name = document.getElementById('fullName').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const pass = document.getElementById('password').value;
-      const confirm = document.getElementById('confirmPassword').value;
+    const signupBtn = document.getElementById("signupBtn");
+    const msg = document.getElementById("msg");
+
+    signupBtn.addEventListener("click", () => {
+      const name = document.getElementById("fullName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const pass = document.getElementById("password").value;
+      const confirm = document.getElementById("confirmPassword").value;
 
       if (!name || !email || !pass || !confirm) {
-        alert('Please fill all fields.');
+        alert("Please fill all fields.");
         return;
       }
 
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert('Please enter a valid email.');
+        alert("Please enter a valid email.");
         return;
       }
 
       if (pass.length < 6) {
-        alert('Password must be at least 6 characters');
+        alert("Password must be at least 6 characters.");
         return;
       }
 
       if (pass !== confirm) {
-        alert('Passwords do not match');
+        alert("Passwords do not match.");
         return;
       }
 
-      // Demo-only: show success and go to login
-      document.getElementById("msg").textContent = "Account created (demo). Redirecting to login...";
-
+      msg.textContent = "Account created (demo). Redirecting to login...";
       setTimeout(() => {
         window.location.href = "login.html";
-      }, 1000);
-    });  /* ← you were missing this */
+      }, 900);
+    });
   </script>
 </body>
 </html>
