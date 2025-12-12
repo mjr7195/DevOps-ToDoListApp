@@ -1,20 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ToDo List App</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>My ToDo List</h1>
-  </header>
-  <main>
-    <input type="text" id="newTask" placeholder="Add a new task...">
-    <button id="addTask">Add</button>
-    <ul id="taskList"></ul>
-  </main>
+  <div class="app">
+    <main class="bubble">
+      <div class="bubble-header">
+        <div class="subtitle">MY NOTES</div>
+        <h1><span id="noteCount">0</span> Notes Created</h1>
+      </div>
+
+      <div class="controls">
+        <input type="text" id="newTask" placeholder="Add a new task..." />
+        <button id="addTask" type="button">Add</button>
+      </div>
+
+      <ul id="taskList"></ul>
+
+      <div class="nav-links">
+        <a href="login.html">Login</a>
+        <span class="dot">•</span>
+        <a href="signup.html">Sign Up</a>
+      </div>
+    </main>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,27 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - ToDo App</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="login-container">
-    <h2>Login</h2>
-    <p id="loginMsg" style="color: green; font-weight: bold;"></p>
-    <input type="text" placeholder="Username" id="username">
-    <input type="password" placeholder="Password" id="password">
-    <button onclick="login()">Login</button>
+  <div class="app">
+    <main class="bubble bubble-auth">
+      <div class="bubble-header">
+        <div class="subtitle">WELCOME BACK</div>
+        <h1>Login</h1>
+        <p id="loginMsg" class="success-msg"></p>
+      </div>
+
+      <div class="controls">
+        <input type="text" placeholder="Username" id="username" />
+        <input type="password" placeholder="Password" id="password" />
+        <button id="loginBtn" type="button">Login</button>
+      </div>
+
+      <div class="nav-links">
+        <a href="signup.html">Need an account? Sign Up</a>
+        <span class="dot">•</span>
+        <a href="index.html">Back to Notes</a>
+      </div>
+    </main>
   </div>
+
   <script>
-    function login() {
-  document.getElementById("loginMsg").textContent = "Login successful (demo).";
-  // redirect after 1 second
-  setTimeout(() => {
-    window.location.href = "index.html";
-  }, 1000);
-}
+    const loginBtn = document.getElementById("loginBtn");
+    const loginMsg = document.getElementById("loginMsg");
+
+    loginBtn.addEventListener("click", () => {
+      loginMsg.textContent = "Login successful (demo). Redirecting...";
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 900);
+    });
   </script>
 </body>
 </html>
